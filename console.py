@@ -129,7 +129,7 @@ class HBNBCommand(cmd.Cmd):
             return
         for param in args[1:]:
             if "=" not in param:
-                return
+                continue
             attr, val = param.split("=")
             if val.startswith("\"") and val.endswith("\""):
                 val = val.replace("_", " ")[1:-1]
