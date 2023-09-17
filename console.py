@@ -138,7 +138,7 @@ class HBNBCommand(cmd.Cmd):
             elif val.isdigit():
                 val = int(val)
             else:
-                return
+                continue
             setattr(new_instance, attr, val)
         storage.save()
         print(new_instance.id)
