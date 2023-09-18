@@ -133,7 +133,6 @@ class HBNBCommand(cmd.Cmd):
             attr, val = param.split("=")
             if val.startswith("\"") and val.endswith("\""):
                 val = val.replace("_", " ")[1:-1]
-                val = val.replace('\\"', '"')
             elif "." in val:
                 val = float(val)
             elif val.isdigit():
