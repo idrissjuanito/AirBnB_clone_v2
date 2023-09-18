@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """ Console Module """
 import cmd
 import sys
@@ -133,7 +133,6 @@ class HBNBCommand(cmd.Cmd):
             attr, val = param.split("=")
             if val.startswith("\"") and val.endswith("\""):
                 val = val.replace("_", " ")[1:-1]
-                val = val.replace('\\"', '"')
             elif "." in val:
                 val = float(val)
             elif val.isdigit():
@@ -141,6 +140,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 continue
             setattr(new_instance, attr, val)
+        storage.new(new_instance)
         storage.save()
         print(new_instance.id)
 
