@@ -9,7 +9,9 @@ from models.base_model import BaseModel, Base
 
 
 class City(BaseModel, Base):
-    """ The city class, that inherits from BaseModel """
+    '''
+        Defines the class City that inherits from BaseModel.
+    '''
     __tablename__ = "cities"
     if getenv("HBNB_TYPE_STORAGE") == "db":
         name = Column(String(128), nullable=False)
