@@ -4,7 +4,7 @@
 '''
 from os import getenv
 from sqlalchemy import create_engine, MetaData
-from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy.orm import relationship, sessionmaker, scoped_session
 from models.base_model import Base
 import models
 from models.user import User
