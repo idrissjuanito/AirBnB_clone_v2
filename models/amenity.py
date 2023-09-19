@@ -1,11 +1,16 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
-from models.base_model import BaseModel
-from sqlalchemy import Column, String
-from sqlalchemy.ext.declarative import declarative_base
-Base = declarative_base()
+from os import getenv
 
+from sqlalchemy.orm import relationship
+from models.base_model import BaseModel, Base
+from sqlalchemy import Column, String
 
 class Amenity(BaseModel, Base):
-    __tablename__ = "amenities"
-    name = Column(String, nullable=False)
+    if getenv('HBNB_STORAGE_DB') == 'db':
+        __tablename__ = "amenities"
+        name = Column(String(128), nullable=False)
+        place_amenities = relationship('Place', secondary='place_amenity', viewonly=False,
+                                       backref='amenities')
+    else:
+        name = ''
