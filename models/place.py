@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ holds a class Place"""
 import models
+from models.amenity import Amenity
 from models.base_model import BaseModel, Base
 from os import getenv
 import sqlalchemy
@@ -8,7 +9,8 @@ from sqlalchemy import Column, String, Integer, Float, Table, ForeignKey
 from sqlalchemy.orm import relationship
 
 if getenv('HBNB_TYPE_STORAGE') == 'db':
-    place_amenity = Table('place_amenity', Base.metadata,
+    metadata = Base.metadata
+    place_amenity = Table('place_amenity', metadata,
                           Column('place_id',
                                  String(60),
                                  ForeignKey('places.id'),
@@ -89,3 +91,10 @@ class Place(BaseModel, Base):
                 if amenity.place_id == self.id:
                     list_amenity.append(amenity)
             return list_amenity
+
+        @amenities.setter
+        def amenities(self, obj):
+            """ adds an amenity id to existing amenities """
+            if not isinstance(obj, Amenity):
+                return
+            self.amenity_ids.append(obj.id)
