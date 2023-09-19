@@ -49,8 +49,7 @@ class Place(BaseModel, Base):
                                 nullable=False)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
-        # reviews = relationship("Review", cascade="all, delete",
-        #                        backref="places")
+        reviews = relationship("Review", cascade="all, delete", backref="places")
         # amenities = relationship("Amenity",
         #                          secondary='place_amenity',
         #                          viewonly=False,
@@ -72,15 +71,15 @@ class Place(BaseModel, Base):
         """initializes Place"""
         super().__init__(*args, **kwargs)
 
-    # @property
-    # def reviews(self):
-    #     """attributes that returns list of Review instances"""
-    #     values_review = models.storage.all("Review").values()
-    #     list_review = []
-    #     for review in values_review:
-    #         if review.place_id == self.id:
-    #             list_review.append(review)
-    #     return list_review
+    @property
+    def reviews(self):
+        """attributes that returns list of Review instances"""
+        values_review = models.storage.all("Review").values()
+        list_review = []
+        for review in values_review:
+            if review.place_id == self.id:
+                list_review.append(review)
+        return list_review
 
     # if getenv('HBNB_TYPE_STORAGE') != 'db':
     #     @property
