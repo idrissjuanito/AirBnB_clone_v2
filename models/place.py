@@ -2,32 +2,30 @@
 """ holds a class Place"""
 import models
 from models.base_model import BaseModel, Base
-from models.amenity import Amenity
 from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String, Integer, Float, Table, ForeignKey
 from sqlalchemy.orm import relationship
 
-if getenv('HBNB_TYPE_STORAGE') == 'db':
-    place_amenity = Table('place_amenity', Base.metadata,
-                          Column('place_id',
-                                 String(60),
-                                 ForeignKey('places.id'),
-                                 primary_key=True,
-                                 nullable=False),
-                          Column('amenity_id',
-                                 String(60),
-                                 ForeignKey('amenities.id'),
-                                 primary_key=True,
-                                 nullable=False))
+place_amenity = Table('place_amenity', Base.metadata,
+                      Column('place_id',
+                             String(60),
+                             ForeignKey('places.id'),
+                             primary_key=True,
+                             nullable=False),
+                      Column('amenity_id',
+                             String(60),
+                             ForeignKey('amenities.id'),
+                             primary_key=True,
+                             nullable=False))
 
 
 class Place(BaseModel, Base):
     """ Represents of Place """
+    __tablename__ = 'places'
     if getenv('HBNB_TYPE_STORAGE') == 'db':
-        __tablename__ = 'places'
         city_id = Column(String(60),
-                         ForeignKey("cities.id"),
+                         ForeignKey('cities.id'),
                          nullable=False)
         user_id = Column(String(60),
                          ForeignKey('users.id'),
@@ -50,9 +48,9 @@ class Place(BaseModel, Base):
                                 nullable=False)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
-        reviews = relationship("Review", cascade="all, delete", back_populates="places")
-        amenities = relationship("Amenity", secondary='place_amenity', viewonly=False,
-                                 back_populates="place_amenities")
+        reviews = relationship('Review', cascade='all, delete', backref='places')
+        amenities = relationship('Amenity', secondary='place_amenity', viewonly=False,
+                                 back_populates='place_amenities')
     else:
         city_id = ""
         user_id = ""
@@ -66,9 +64,9 @@ class Place(BaseModel, Base):
         longitude = 0.0
         amenity_ids = []
 
-    def __init__(self, *args, **kwargs):
-        """initializes Place"""
-        super().__init__(*args, **kwargs)
+    # def __init__(self, *args, **kwargs):
+    #     """initializes Place"""
+    #     super().__init__(*args, **kwargs)
 
     @property
     def reviews(self):
@@ -80,20 +78,19 @@ class Place(BaseModel, Base):
                 list_review.append(review)
         return list_review
 
-    if getenv('HBNB_TYPE_STORAGE') != 'db':
-        @property
-        def amenities(self):
-            """attributes that returns list of Amenity instances"""
-            values_amenity = models.storage.all("Amenity").values()
-            list_amenity = []
-            for amenity in values_amenity:
-                if amenity.place_id == self.id:
-                    list_amenity.append(amenity)
-            return list_amenity
+    # @property
+    # def amenities(self):
+    #     """attributes that returns list of Amenity instances"""
+    #     values_amenity = models.storage.all("Amenity").values()
+    #     list_amenity = []
+    #     for amenity in values_amenity:
+    #         if amenity.place_id == self.id:
+    #             list_amenity.append(amenity)
+    #     return list_amenity
 
-        @amenities.setter
-        def amenities(self, obj):
-            """ adds an amenity id to existing amenities """
-            if not isinstance(obj, Amenity):
-                return
-            self.amenity_ids.append(obj.id)
+    # @amenities.setter
+    # def amenities(self, obj):
+    #     """ adds an amenity id to existing amenities """
+    #     from models.amenity import Amenity
+    #     if isinstance(obj, Amenity):
+            # self.amenity_ids.append(obj.id)

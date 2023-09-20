@@ -44,12 +44,26 @@ class FileStorage:
 
     def reload(self):
         """Loads storage dictionary from file"""
-        from models import classes
+        from os import getenv
+        from models.base_model import BaseModel
+        from models.user import User
+        from models.amenity import Amenity
+        from models.city import City
+        from models.place import Place
+        from models.review import Review
+        from models.state import State
+
+
+        classes = {"User": User, "BaseModel": BaseModel,
+                   "Place": Place, "State": State,
+                   "City": City, "Amenity": Amenity,
+                   "Review": Review}
         try:
             temp = {}
             with open(FileStorage.__file_path, 'r') as f:
                 temp = json.load(f)
                 for key, val in temp.items():
-                    self.__objects[key] = classes[val['__class__']](**val)
+                    item = classes[val['__class__']](**val)
+                    self.__objects[key] = item
         except FileNotFoundError:
             pass
