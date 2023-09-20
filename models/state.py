@@ -13,13 +13,9 @@ class State(BaseModel, Base):
     __tablename__ = 'states'
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         name = Column(String(128), nullable=False)
-        cities = relationship("City", cascade="all, delete", backref="states")
+        cities = relationship("City", cascade="all, delete", backref="state")
     else:
         name = ""
-
-        def __init__(self, *args, **kwargs):
-            """initializes state"""
-            super().__init__(*args, **kwargs)
 
         @property
         def cities(self):
@@ -30,3 +26,7 @@ class State(BaseModel, Base):
                 if city.state_id == self.id:
                     list_city.append(city)
             return list_city
+
+    def __init__(self, *args, **kwargs):
+        """initializes state"""
+        super().__init__(*args, **kwargs)
