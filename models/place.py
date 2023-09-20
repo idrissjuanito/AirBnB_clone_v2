@@ -2,7 +2,7 @@
 """ holds a class Place"""
 import models
 from models.base_model import BaseModel, Base
-# from models.amenity import Amenity
+from models.amenity import Amenity
 from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String, Integer, Float, Table, ForeignKey
@@ -92,9 +92,9 @@ class Place(BaseModel, Base):
                     list_amenity.append(amenity)
             return list_amenity
 
-        # @amenities.setter
-        # def amenities(self, obj):
-        #     """ adds an amenity id to existing amenities """
-        #     if not isinstance(obj, Amenity):
-        #         return
-        #     self.amenity_ids.append(obj.id)
+        @amenities.setter
+        def amenities(self, obj):
+            """ adds an amenity id to existing amenities """
+            if not isinstance(obj, Amenity):
+                return
+            self.amenity_ids.append(obj.id)
