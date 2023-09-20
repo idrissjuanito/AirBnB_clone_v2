@@ -78,19 +78,19 @@ class Place(BaseModel, Base):
                 list_review.append(review)
         return list_review
 
-    # @property
-    # def amenities(self):
-    #     """attributes that returns list of Amenity instances"""
-    #     values_amenity = models.storage.all("Amenity").values()
-    #     list_amenity = []
-    #     for amenity in values_amenity:
-    #         if amenity.place_id == self.id:
-    #             list_amenity.append(amenity)
-    #     return list_amenity
+    @property
+    def amenities(self):
+        """attributes that returns list of Amenity instances"""
+        values_amenity = models.storage.all("Amenity").values()
+        list_amenity = []
+        for amenity in values_amenity:
+            if amenity.place_id == self.id:
+                list_amenity.append(amenity)
+        return list_amenity
 
-    # @amenities.setter
-    # def amenities(self, obj):
-    #     """ adds an amenity id to existing amenities """
-    #     from models.amenity import Amenity
-    #     if isinstance(obj, Amenity):
-            # self.amenity_ids.append(obj.id)
+    @amenities.setter
+    def amenities(self, obj):
+        """ adds an amenity id to existing amenities """
+        from models.amenity import Amenity
+        if isinstance(obj, Amenity):
+            self.amenity_ids.append(obj.id)
