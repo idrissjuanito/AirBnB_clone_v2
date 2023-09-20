@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """ holds a class Place"""
 import models
 from models.base_model import BaseModel, Base
@@ -9,8 +9,7 @@ from sqlalchemy import Column, String, Integer, Float, Table, ForeignKey
 from sqlalchemy.orm import relationship
 
 if getenv('HBNB_TYPE_STORAGE') == 'db':
-    metadata = Base.metadata
-    place_amenity = Table('place_amenity', metadata,
+    place_amenity = Table('place_amenity', Base.metadata,
                           Column('place_id',
                                  String(60),
                                  ForeignKey('places.id'),
@@ -51,9 +50,9 @@ class Place(BaseModel, Base):
                                 nullable=False)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
-        reviews = relationship("Review", cascade="all, delete", backref="places")
+        reviews = relationship("Review", cascade="all, delete", back_populates="places")
         amenities = relationship("Amenity", secondary='place_amenity', viewonly=False,
-                                 backref="place_amenities")
+                                 back_populates="place_amenities")
     else:
         city_id = ""
         user_id = ""
