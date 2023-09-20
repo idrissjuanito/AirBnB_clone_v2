@@ -125,7 +125,9 @@ class HBNBCommand(cmd.Cmd):
             return
         new_instance = HBNBCommand.classes[cls]()
         if len(args) < 2:
+            storage.new(new_instance)
             storage.save()
+            print(new_instance.id)
             return
         for param in args[1:]:
             if "=" not in param:
