@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """ holds a class Place"""
 import models
-from models.amenity import Amenity
 from models.base_model import BaseModel, Base
+# from models.amenity import Amenity
 from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String, Integer, Float, Table, ForeignKey
@@ -24,7 +24,7 @@ if getenv('HBNB_TYPE_STORAGE') == 'db':
 
 
 class Place(BaseModel, Base):
-    """Represents of Place """
+    """ Represents of Place """
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         __tablename__ = 'places'
         city_id = Column(String(60),
@@ -53,7 +53,7 @@ class Place(BaseModel, Base):
         longitude = Column(Float, nullable=True)
         reviews = relationship("Review", cascade="all, delete", backref="places")
         amenities = relationship("Amenity", secondary='place_amenity', viewonly=False,
-                                 backref="place_amenities")
+                                 back_populates="place_amenities")
     else:
         city_id = ""
         user_id = ""
@@ -92,9 +92,9 @@ class Place(BaseModel, Base):
                     list_amenity.append(amenity)
             return list_amenity
 
-        @amenities.setter
-        def amenities(self, obj):
-            """ adds an amenity id to existing amenities """
-            if not isinstance(obj, Amenity):
-                return
-            self.amenity_ids.append(obj.id)
+        # @amenities.setter
+        # def amenities(self, obj):
+        #     """ adds an amenity id to existing amenities """
+        #     if not isinstance(obj, Amenity):
+        #         return
+        #     self.amenity_ids.append(obj.id)
