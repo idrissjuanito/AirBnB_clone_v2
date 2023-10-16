@@ -11,8 +11,7 @@ fi
 ln -s "/data/web_static/releases/test" /data/web_static/current
 chown -R ubuntu:ubuntu /data/
 
-which nginx
-if [[ $? -eq 1 ]]; then
+if [[ ! $(nginx -v) ]]; then
 	apt-get update
 	apt install -y curl gnupg2 ca-certificates lsb-release \
 			debian-archive-keyring
