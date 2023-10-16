@@ -26,6 +26,15 @@ if [[ $? -eq 1 ]]; then
     apt-get install -y nginx
     nginx
 fi
+cat <<EOF > /data/web_static/current/index.html
+<html>
+  <head>
+  </head>
+  <body>
+    Holberton School
+  </body>
+</html>
+EOF
 sed -i "/location \/ {/i\ \n\tlocation /hbnb_static {\n\t\talias /data/web_static/current/; \n\t}" \
 	/etc/nginx/conf.d/default.conf
 nginx -s reload
