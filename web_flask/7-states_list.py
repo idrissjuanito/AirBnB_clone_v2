@@ -15,7 +15,7 @@ def close_db(e=None):
     storage.close()
 
 
-app.teardown_appcontext(close_db)
+@app.teardown_appcontext(close_db)
 
 
 @app.route("/states_list", strict_slashes=False)
