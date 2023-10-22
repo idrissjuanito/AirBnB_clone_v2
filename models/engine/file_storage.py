@@ -53,7 +53,6 @@ class FileStorage:
         from models.review import Review
         from models.state import State
 
-
         classes = {"User": User, "BaseModel": BaseModel,
                    "Place": Place, "State": State,
                    "City": City, "Amenity": Amenity,
@@ -67,7 +66,6 @@ class FileStorage:
                     self.__objects[key] = item
         except FileNotFoundError:
             pass
-
 
     def close(self):
         """ calls reload method """
