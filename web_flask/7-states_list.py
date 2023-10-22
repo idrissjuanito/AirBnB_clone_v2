@@ -8,6 +8,16 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 
+def close_db(e=None):
+    """
+    used for cleanup by flask
+    """
+    storage.close()
+
+
+app.teardown_appcontext(close_db)
+
+
 @app.route("/states_list", strict_slashes=False)
 def get_states():
     """
@@ -17,13 +27,5 @@ def get_states():
     return render_template("7-states_list.html", states=states.items())
 
 
-def close_db(e=None):
-    """
-    used for cleanup by flask
-    """
-    storage.close()
-
-
 if __name__ == "__main__":
-    app.teardown_appcontext(close_db)
     app.run()
