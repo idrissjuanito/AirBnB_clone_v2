@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """
 basic flask app with 3 routes
 one of the routes accepts a variable
