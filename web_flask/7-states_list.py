@@ -8,14 +8,12 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 
+@app.teardown_appcontext
 def close_db(e=None):
     """
     used for cleanup by flask
     """
     storage.close()
-
-
-@app.teardown_appcontext(close_db)
 
 
 @app.route("/states_list", strict_slashes=False)
