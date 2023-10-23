@@ -4,7 +4,6 @@
         <TITLE>HBNB</TITLE>
     </HEAD>
     <BODY>
-        <H1>States</H1>
 		{% if id in states %}
 			<h1>State: {{ states[id].name }}</h1>
 			<H3>Cities:</H3>
@@ -14,7 +13,7 @@
 				{% endfor %}
 			</UL>
 		{% else %}
-		<H1>Not found!</H1>
+			<H1>Not found!</H1>
 		{% endif %}
 	</BODY>
 </HTML>
