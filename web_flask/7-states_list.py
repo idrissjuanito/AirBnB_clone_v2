@@ -22,7 +22,7 @@ def get_states():
     queries storage for states and renders with jinja template
     """
     states = storage.all(State)
-    return render_template("7-states_list.html", states=states)
+    return render_template("7-states_list.html", states=states.items())
 
 
 if __name__ == "__main__":
