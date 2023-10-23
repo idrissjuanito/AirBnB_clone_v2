@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-flask app for querying a list of cities by state
+flask app for querying in templates
 from airbnb project storage
 """
 from models import storage, State, City
@@ -17,7 +17,7 @@ def close_db(e=None):
     """
     used for cleanup by flask
     """
-    storage.close()
+    store.close()
 
 
 @app.route("/states", strict_slashes=False)
