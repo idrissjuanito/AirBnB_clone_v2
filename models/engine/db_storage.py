@@ -26,15 +26,6 @@ class DBStorage:
         '''
             Create engine and link to MySQL databse (hbnb_dev, hbnb_dev_db)
         '''
-        # user = getenv("HBNB_MYSQL_USER")
-        # pwd = getenv("HBNB_MYSQL_PWD")
-        # host = getenv("HBNB_MYSQL_HOST")
-        # db = getenv("HBNB_MYSQL_DB")
-        # envv = getenv("HBNB_ENV", "none")
-        # self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
-        #     user, pwd, host, db), pool_pre_ping=True)
-        # if envv == 'test':
-        #     Base.metadata.drop_all(self.__engine)
         self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".
                                       format(getenv("HBNB_MYSQL_USER"),
                                              getenv("HBNB_MYSQL_PWD"),
@@ -50,26 +41,17 @@ class DBStorage:
         '''
         db_dict = {}
 
-        if cls != "":
+        if cls:
             if type(cls) is str:
                 cls = eval(cls)
             query = self.__session.query(cls)
-            # objs = self.__session.query(models.classes[cls]).all()
-            # for obj in objs:
-            #     if 'is_instance_state' in obj.__dict__:
-            #         obj.__dict__.pop('is_instance_state')
             for obj in query:
                 key = "{}.{}".format(obj.__class__.__name__, obj.id)
                 db_dict[key] = obj
-            # return db_dict
         else:
             obj_list = [User, State, City, Amenity, Place, Review]
-            # for k, v in models.classes.items():
-            #     if k != "BaseModel":
             for class_name in obj_list:
                 query = self.__session.query(class_name)
-                # objs = self.__session.query(v).all()
-                # if len(objs) > 0:
                 for obj in query:
                     key = "{}.{}".format(obj.__class__.__name__, obj.id)
                     db_dict[key] = obj
